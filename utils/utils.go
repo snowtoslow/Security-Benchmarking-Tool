@@ -56,5 +56,8 @@ func replaceNewLines(data []byte)(dataWithOutNewLines string){
 }
 
 func GenerateFileNames() string{
+
+	// CHAGE HERE FOR DIRECTORY ON YOUR COMPUTER
+
 	return "/home/snowtoslow/Desktop/myFile.audit"
 }
