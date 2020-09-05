@@ -15,6 +15,6 @@ func main() {
 	}
 
 	arrayData:=utils.ParseFile(utils.GenerateFileNames())
-	fmt.Println(arrayData[0])
-
+	info:=utils.CreateMapForMultipleItems(arrayData)
+	fmt.Println(info)
 }

@@ -1,0 +1,25 @@
+fmt.Println(out)
+	x := make(map[string]models.CustomItem)
+
+	for _,v := range out {
+		if v==58 {
+			x["first"] = models.CustomItem{strings.TrimSpace(out[:v]),strings.TrimSpace(out[v:])}
+		}
+	}
+
+	m := map[string]interface{}{}
+
+	for _,v := range out {
+		if v==58 {
+			m["First"]=map[string]interface{}{
+				out[:v]:out[v:],
+			}
+		}
+	}
+
+
+	file, err := json.MarshalIndent(x, "", " ")
+	if err!=nil {
+		fmt.Println(err)
+	}
+	_ = ioutil.WriteFile("/home/snowtoslow/Desktop/test.json", file, 0644)
