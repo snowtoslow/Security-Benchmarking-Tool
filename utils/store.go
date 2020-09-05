@@ -2,40 +2,26 @@ package utils
 
 import (
 	"strings"
-	"unicode"
 )
 
 
-func CreateMapForMultipleItems(arrayOfParsedData []string) []map[string]interface{} {
-	var arrayOfMaps []map[string]interface{}
+func CreateMapForMultipleItems(arrayOfParsedData []string) []map[string]string {
+	var arrayOfMaps []map[string]string
 	for _,value :=range arrayOfParsedData{
-		arrayOfMaps = append(arrayOfMaps,CreateMapForSingleItem(strings.TrimLeft(strings.TrimRight(value, "</custom_item>"), "<custom_item>")))
+		arrayOfMaps = append(arrayOfMaps,createMapForSingleItem(strings.TrimLeft(strings.TrimRight(value, "</custom_item>"), "<custom_item>")))
 	}
 
 	return arrayOfMaps
 }
 
 
-func CreateMapForSingleItem(myStr string) map[string]interface{} {
-	m := map[string]interface{}{}
-
-	for k,v := range myStr {
-		if v==58 {
-			m["First"]=map[string]interface{}{
-				myStr[:k]:myStr[k+1:],
-			}
+func createMapForSingleItem(myStr string) (mymap map[string]string) {
+	mymap = make(map[string]string)
+	words := strings.Fields(myStr)
+	for i := 0; i <len(words) ; i++ {
+		if words[i]==":" {
+			mymap[words[i-1]]=words[i+1]
 		}
 	}
-
-	return m
-}
-
-func removeSpace(s string) string {
-	rr := make([]rune, 0, len(s))
-	for _, r := range s {
-		if !unicode.IsSpace(r) {
-			rr = append(rr, r)
-		}
-	}
-	return string(rr)
+	return mymap
 }
