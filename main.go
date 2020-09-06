@@ -30,7 +30,9 @@ func init() {
 
 func main() {
 	HOME, err := utils.GetUserHome()
-	policyFileName,err := utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
+	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory 
+	
+	policyFileName,err := utils.GenerateSavedFileName(auditPath + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
 	if err!=nil {
 		log.Println(err)
 	}
@@ -41,7 +43,7 @@ func main() {
 	arrayData:=utils.ParseFile(policyFileName)
 	info:=utils.CreateMapForMultipleItems(arrayData)
 
-	jsonFileName, err:= utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.ParsedDataDirectory,constants.ParsedFileFormat,constants.ParsedPolicy)
+	jsonFileName, err:= utils.GenerateSavedFileName(auditPath + constants.ParsedDataDirectory,constants.ParsedFileFormat,constants.ParsedPolicy)
 	if err:= utils.CreateJsonResponse(jsonFileName,info);err!=nil{
 		log.Println("ERROR CREATING JSON",err)
 	}
