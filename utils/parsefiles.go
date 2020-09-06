@@ -55,9 +55,3 @@ func replaceNewLines(data []byte)(dataWithOutNewLines string){
 	return
 }
 
-
-func GenerateFileNames() string{
-
-	return "/home/snowtoslow/Desktop/myFile.audit"
-}
-
