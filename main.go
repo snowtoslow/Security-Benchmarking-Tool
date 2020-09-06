@@ -17,7 +17,7 @@ func init() {
 	log.Println(HOME)
 	if _, err := os.Stat(HOME + constants.DESKTOP + constants.AuditDirectory); err != nil {
 		if os.IsNotExist(err) {
-			if err:=utils.CreateAuditsDir(HOME);err!=nil{
+			if err := utils.CreateAuditsDir(HOME); err != nil {
 				log.Println("Error creating my directory")
 			}
 		} else {
@@ -26,26 +26,24 @@ func init() {
 	}
 }
 
-
-
 func main() {
 	HOME, err := utils.GetUserHome()
-	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory 
-	
-	policyFileName,err := utils.GenerateSavedFileName(auditPath + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
-	if err!=nil {
+	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
+
+	policyFileName, err := utils.GenerateSavedFileName(auditPath+constants.SavedFileDIRECTORY, constants.AuditFormat, constants.Policy)
+	if err != nil {
 		log.Println(err)
 	}
-	if err:=utils.DownloadFileToExpectedLocation(policyFileName);err!=nil{
-		log.Println("ERROR IN DOWNLOADING: ",err)
+	if err := utils.DownloadFileToExpectedLocation(policyFileName); err != nil {
+		log.Println("ERROR IN DOWNLOADING: ", err)
 	}
 
-	arrayData:=utils.ParseFile(policyFileName)
-	info:=utils.CreateMapForMultipleItems(arrayData)
+	arrayData := utils.ParseFile(policyFileName)
+	info := utils.CreateMapForMultipleItems(arrayData)
 
-	jsonFileName, err:= utils.GenerateSavedFileName(auditPath + constants.ParsedDataDirectory,constants.ParsedFileFormat,constants.ParsedPolicy)
-	if err:= utils.CreateJsonResponse(jsonFileName,info);err!=nil{
-		log.Println("ERROR CREATING JSON",err)
+	jsonFileName, err := utils.GenerateSavedFileName(auditPath+constants.ParsedDataDirectory, constants.ParsedFileFormat, constants.ParsedPolicy)
+	if err := utils.CreateJsonResponse(jsonFileName, info); err != nil {
+		log.Println("ERROR CREATING JSON", err)
 	}
 
 }
