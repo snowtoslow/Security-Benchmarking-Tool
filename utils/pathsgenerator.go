@@ -10,23 +10,23 @@ import (
 )
 
 // for tests purpose here
-func GenerateFileNames() string{
+func GenerateFileNames() string {
 	return "/home/snowtoslow/Desktop/myFile.audit"
 }
 
-func GenerateSavedFileName(path string,fileFormat string,fileType string)(savedFileName string,err error){
-	counter, err:= fileCount(path)
-	if err!=nil {
-		return "",err
+func GenerateSavedFileName(path string, fileFormat string, fileType string) (savedFileName string, err error) {
+	counter, err := fileCount(path)
+	if err != nil {
+		return "", err
 	}
 	dt := time.Now()
-	date:= fmt.Sprint(dt.Format("01022006"))
+	date := fmt.Sprint(dt.Format("01022006"))
 
-	savedFileName = path  + fileType + date + counter + fileFormat // here fileType if policy or parsedData file format is .json or .audit
+	savedFileName = path + fileType + date + counter + fileFormat // here fileType if policy or parsedData file format is .json or .audit
 	return
 }
 
-func fileCount(path string) (numberOfFiles string,err error){
+func fileCount(path string) (numberOfFiles string, err error) {
 	i := 0
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
@@ -41,17 +41,17 @@ func fileCount(path string) (numberOfFiles string,err error){
 	return
 }
 
-func CreateAuditsDir(home string)(err error){
-	home,err = GetUserHome()
+func CreateAuditsDir(home string) (err error) {
+	home, err = GetUserHome()
 	if err != nil {
 		return
 	}
-	err = os.MkdirAll(home + constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,0755)
-	if err != nil{
+	err = os.MkdirAll(home+constants.DESKTOP+constants.AuditDirectory+constants.SavedFileDIRECTORY, 0755)
+	if err != nil {
 		return err
 	}
 
-	err = os.MkdirAll(home + constants.DESKTOP + constants.AuditDirectory + constants.ParsedDataDirectory ,0755)
+	err = os.MkdirAll(home+constants.DESKTOP+constants.AuditDirectory+constants.ParsedDataDirectory, 0755)
 	if err != nil {
 		return err
 	}
@@ -59,12 +59,11 @@ func CreateAuditsDir(home string)(err error){
 	return nil
 }
 
-
-func GetUserHome()(home string,err error){
+func GetUserHome() (home string, err error) {
 
 	home, err = os.UserHomeDir()
 	if err != nil {
-		return "",err
+		return "", err
 	}
 
 	return
