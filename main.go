@@ -17,7 +17,9 @@ func init() {
 	log.Println(HOME)
 	if _, err := os.Stat(HOME + constants.DESKTOP + constants.AuditDirectory); err != nil {
 		if os.IsNotExist(err) {
-			utils.CreateAuditsDir(HOME)
+			if err:=utils.CreateAuditsDir(HOME);err!=nil{
+				log.Println("Error creating my directory")
+			}
 		} else {
 			log.Println("File exists!!!")
 		}
@@ -28,20 +30,20 @@ func init() {
 
 func main() {
 	HOME, err := utils.GetUserHome()
-	fileName,err := utils.GenerateSavedFileName(HOME+constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
-
+	policyFileName,err := utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
 	if err!=nil {
 		log.Println(err)
 	}
-
-
-	if err:=utils.DownloadFile(fileName,"https://www.tenable.com/downloads/api/v1/public/pages/configuration-audit-policies/downloads/11237/download?i_agree_to_tenable_license_agreement=true");err!=nil{
-		log.Println(err)
-	} else{
-		log.Println("DOWNLOADED")
+	if err:=utils.DownloadFileToExpectedLocation(policyFileName);err!=nil{
+		log.Println("ERROR IN DOWNLOADING: ",err)
 	}
 
-	/*arrayData:=utils.ParseFile(utils.GenerateFileNames())
+	arrayData:=utils.ParseFile(policyFileName)
 	info:=utils.CreateMapForMultipleItems(arrayData)
-	fmt.Println(info)*/
+
+	jsonFileName, err:= utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.ParsedDataDirectory,constants.ParsedFileFormat,constants.ParsedPolicy)
+	if err:= utils.CreateJsonResponse(jsonFileName,info);err!=nil{
+		log.Println("ERROR CREATING JSON",err)
+	}
+
 }

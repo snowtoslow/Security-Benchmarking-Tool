@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
+// for tests purpose here
 func GenerateFileNames() string{
-
 	return "/home/snowtoslow/Desktop/myFile.audit"
 }
 

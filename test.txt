@@ -1,3 +1,4 @@
+/// example of map string interface
 fmt.Println(out)
 	x := make(map[string]models.CustomItem)
 
@@ -18,8 +19,20 @@ fmt.Println(out)
 	}
 
 
-	file, err := json.MarshalIndent(x, "", " ")
+/// before UI integration
+	HOME, err := utils.GetUserHome()
+	policyFileName,err := utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)
 	if err!=nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
-	_ = ioutil.WriteFile("/home/snowtoslow/Desktop/test.json", file, 0644)
+	if err:=utils.DownloadFileToExpectedLocation(policyFileName);err!=nil{
+		log.Println("ERROR IN DOWNLOADING: ",err)
+	}
+
+	arrayData:=utils.ParseFile(policyFileName)
+	info:=utils.CreateMapForMultipleItems(arrayData)
+
+	jsonFileName, err:= utils.GenerateSavedFileName(HOME + constants.DESKTOP + constants.AuditDirectory + constants.ParsedDataDirectory,constants.ParsedFileFormat,constants.ParsedPolicy)
+	if err:= utils.CreateJsonResponse(jsonFileName,info);err!=nil{
+		log.Println("ERROR CREATING JSON",err)
+	}

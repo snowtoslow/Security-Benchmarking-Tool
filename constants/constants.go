@@ -2,14 +2,16 @@ package constants
 
 
 var(
-	DESKTOP              = "/Desktop"
-	AuditDirectory       = "/audit"
-	SavedFileDIRECTORY   = "/new-audits/"
-	ParsedDataDirectory  = "/policy-info/"
+	DESKTOP              = "/Desktop" // Desktop
+	AuditDirectory       = "/audit" // File which will be created
+
+	SavedFileDIRECTORY   = "/new-audits/" // Path to downloaded audits
+	ParsedDataDirectory  = "/policy-info/" // Path to our json
 
 
-	Policy				 = "policy"
-	ParsedData			 = "parsed-data"
+	Policy				 = "policy" // part of name in our file
+	ParsedPolicy 		 = "parsed-policy"
+
 	AuditFormat 	     = ".audit"
 	ParsedFileFormat 	 = ".json"
 )
