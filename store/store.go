@@ -1,6 +1,8 @@
-package utils
+package store
 
 import (
+	"Security-Benchmarking-Tool/files"
+	"Security-Benchmarking-Tool/utils"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -36,7 +38,7 @@ func DownloadFileToExpectedLocation(fileName string) (err error) {
 	/*HOME, err := utils.GetUserHome()
 	fileName,err := utils.GenerateSavedFileName(HOME+constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)*/
 
-	if err := DownloadFile(fileName, "https://www.tenable.com/downloads/api/v1/public/pages/configuration-audit-policies/downloads/11237/download?i_agree_to_tenable_license_agreement=true"); err != nil {
+	if err := files.DownloadFile(fileName, "https://www.tenable.com/downloads/api/v1/public/pages/configuration-audit-policies/downloads/11237/download?i_agree_to_tenable_license_agreement=true"); err != nil {
 		return err
 	}
 	defer log.Println("Downloaded")
@@ -59,19 +61,10 @@ func createMapForSingleItem(myStr string) (mymap map[string]string) {
 	words := strings.Fields(myStr)
 	for i := 0; i < len(words); i++ {
 		if words[i] == ":" {
-			mymap[removeQuotes(words[i-1])] = removeQuotes(words[i+1])
+			mymap[utils.RemoveQuotes(words[i-1])] = utils.RemoveQuotes(words[i+1])
 		}
 	}
 	return mymap
 }
 
-func removeQuotes(string2 string) string {
-	if string2[0] == '"' {
-		string2 = string2[1:]
-	}
-	if i := len(string2) - 1; string2[i] == '"' {
-		string2 = string2[:i]
-	}
 
-	return string2
-}
