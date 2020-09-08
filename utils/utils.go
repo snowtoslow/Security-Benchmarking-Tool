@@ -68,3 +68,14 @@ func GetUserHome() (home string, err error) {
 
 	return
 }
+
+func RemoveQuotes(string2 string) string {
+	if string2[0] == '"' {
+		string2 = string2[1:]
+	}
+	if i := len(string2) - 1; string2[i] == '"' {
+		string2 = string2[:i]
+	}
+
+	return string2
+}
