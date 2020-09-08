@@ -1,5 +1,11 @@
 # Security Benchmarking Tool
 
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [UI](#ui)
+
 ## General Info
 
 Our tool allows to import audit policies,parsing and saving them locally into a structured form.
@@ -31,12 +37,21 @@ Project is created with:
       ``` go build ```  && ``` ./Security-Benchmarking-Tool```
       
  
-    }  ELSE     {
+    }  ELSE {
+        
+        ``` cd ../../Security-Benchmarking-Tool``` 
         
         
+   &&  
         
-        
+        ``` ./Security-Benchmarking-Tool ```   
     
-    }
+   }
+   
+
+  
+   
+    
+    
     
         
