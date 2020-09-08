@@ -33,7 +33,6 @@ func main() {
 
 	HOME, err := utils.GetUserHome()
 	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
-	policyFileName, err := utils.GenerateSavedFileName(auditPath+constants.SavedFileDIRECTORY, constants.AuditFormat, constants.Policy)
 
 
 	gtk.Init(nil)
@@ -77,7 +76,8 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
-		if err := store.DownloadFileToExpectedLocation(policyFileName); err != nil {
+		policyFileName, err := utils.GenerateSavedFileName(auditPath+constants.SavedFileDIRECTORY, constants.AuditFormat, constants.Policy)
+		if err = store.DownloadFileToExpectedLocation(policyFileName); err != nil {
 			log.Println("ERROR IN DOWNLOADING: ", err)
 			label1.SetText(fmt.Sprintf("ERROR IN DOWNLOADING: %s",err))
 		}else{
@@ -86,7 +86,7 @@ func main() {
 	})
 
 	parseButton.Connect("clicked", func() {
-		arrayData := files.ParseFile(policyFileName)
+		arrayData := files.ParseFile(auditPath)
 		info := store.CreateMapForMultipleItems(arrayData)
 		jsonFileName, err := utils.GenerateSavedFileName(auditPath+constants.ParsedDataDirectory, constants.ParsedFileFormat, constants.ParsedPolicy)
 		if err = store.CreateJsonResponse(jsonFileName, info); err != nil {
