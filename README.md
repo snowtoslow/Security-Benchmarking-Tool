@@ -52,11 +52,13 @@ Project is created with:
    # UI
    
    
-  ![ui(1)](https://user-images.githubusercontent.com/47230162/92507517-c9113200-f20f-11ea-9b6f-b9ae57baeb4a.png)            ![myVideo](https://user-images.githubusercontent.com/47230162/92507897-60768500-f210-11ea-8c93-866f344ecb62.gif)
+  ![ui(1)](https://user-images.githubusercontent.com/47230162/92507517-c9113200-f20f-11ea-9b6f-b9ae57baeb4a.png)            
   
   
   
-  # INPUT & OUTPUT EXAMPLE
+  ![myVideo](https://user-images.githubusercontent.com/47230162/92507897-60768500-f210-11ea-8c93-866f344ecb62.gif)
+  
+  
 
 
   
