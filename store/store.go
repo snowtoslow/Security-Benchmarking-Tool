@@ -68,3 +68,19 @@ func createMapForSingleItem(myStr string) (mymap map[string]string) {
 }
 
 
+func SearchItemsByKey(arrayToSearchIn []map[string]string,searcheableItem string)(mapOfSearchedValues []map[string]string,message string){
+	for _,value := range arrayToSearchIn{
+		for k,_ := range value{
+			if strings.ToLower(value[k])==strings.ToLower(searcheableItem) {
+				mapOfSearchedValues = append(mapOfSearchedValues,value)
+				message = "The configurations was found!"
+			}else {
+				message = "Not found!"
+			}
+		}
+	}
+
+	return
+}
+
+

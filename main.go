@@ -88,6 +88,7 @@ func main() {
 	parseButton.Connect("clicked", func() {
 		arrayData := files.ParseFile(policyFileNameNew)
 		info := store.CreateMapForMultipleItems(arrayData)
+		/*fmt.Println(store.SearchItemsByKey(info,"description"))*/
 		jsonFileName, err := utils.GenerateSavedFileName(auditPath+constants.ParsedDataDirectory, constants.ParsedFileFormat, constants.ParsedPolicy)
 		if err = store.CreateJsonResponse(jsonFileName, info); err != nil {
 			log.Println("ERROR CREATING JSON", err)
