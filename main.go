@@ -98,6 +98,7 @@ func main() {
 		}
 	})
 
+
 	win.ShowAll()
 
 	gtk.Main()

@@ -1,6 +1,7 @@
 package store
 
 import (
+	"Security-Benchmarking-Tool/constants"
 	"Security-Benchmarking-Tool/files"
 	"Security-Benchmarking-Tool/utils"
 	"encoding/json"
@@ -38,7 +39,7 @@ func DownloadFileToExpectedLocation(fileName string) (err error) {
 	/*HOME, err := utils.GetUserHome()
 	fileName,err := utils.GenerateSavedFileName(HOME+constants.DESKTOP + constants.AuditDirectory + constants.SavedFileDIRECTORY,constants.AuditFormat,constants.Policy)*/
 
-	if err := files.DownloadFile(fileName, "https://www.tenable.com/downloads/api/v1/public/pages/configuration-audit-policies/downloads/11237/download?i_agree_to_tenable_license_agreement=true"); err != nil {
+	if err := files.DownloadFile(fileName, constants.LinkToDownloadFrom); err != nil {
 		return err
 	}
 	defer log.Println("Downloaded")
