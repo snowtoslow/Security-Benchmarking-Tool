@@ -6,7 +6,8 @@ import (
 	"log"
 )
 
-/*func main() {
+/*
+func main() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
@@ -15,18 +16,18 @@ import (
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, listStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
-
+	width, height := 600, 300
 
 	for i := 0; i < len(info) ; i++ {
 		addRow(listStore,createInterface(test(info[i],positionWithKeys)))
 	}
 
-	vAdj ,err := gtk.AdjustmentNew(0, 0, float64(400), 1, 10, float64(400))
+	vAdj ,err := gtk.AdjustmentNew(0, 0, float64(width), 1, 10, float64(height))
 	if err!=nil {
 		log.Println("vadjerr:",err)
 	}
 
-	hAdj, err := gtk.AdjustmentNew(0, 0, float64(600), 1, 10, float64(600))
+	hAdj, err := gtk.AdjustmentNew(0, 0, float64(width), 1, 10, float64(height))
 	if err!=nil {
 		log.Println("hadj",err)
 	}
@@ -41,10 +42,39 @@ import (
 		log.Println("scrolled window error:",err)
 	}
 
+	win.SetPosition(gtk.WIN_POS_CENTER)
+
+	win.SetDefaultSize(width, height)
+
+	selection, err := treeView.GetSelection()
+	if err != nil {
+		log.Fatal("Could not get tree selection object.")
+	}
+	selection.SetMode(gtk.SELECTION_SINGLE)
+	selection.Connect("changed", treeSelectionChangedCB)
+
+
+
 	win.Add(scrolledWindow)
 	win.ShowAll()
 	gtk.Main()
 }*/
+
+// working with single selection
+func treeSelectionChangedCB(selection *gtk.TreeSelection) {
+	var iter *gtk.TreeIter
+	var model gtk.ITreeModel
+	var ok bool
+	model, iter, ok = selection.GetSelected()
+	if ok {
+		tpath, err := model.(*gtk.TreeModel).GetPath(iter)
+		if err != nil {
+			log.Printf("treeSelectionChangedCB: Could not get path from model: %s\n", err)
+			return
+		}
+		log.Printf("treeSelectionChangedCB: selected path: %s\n", tpath)
+	}
+}
 
 //getMapsWithMaxNumberOfKey(info)
 
@@ -137,24 +167,6 @@ func createInterface(stringArr []string) (myInterface []interface{}) {
 	}
 
 	return
-}
-
-func getValuesFromOneMap(myMap map[string]string) (arrayOfStrings []string) {
-	for _, v := range myMap {
-		arrayOfStrings = append(arrayOfStrings, v)
-	}
-	return
-}
-
-func addEmptyValuesToArray(inputString []string) (outPut []string) {
-	outPut = inputString
-	counter := len(inputString)
-	for counter < 11 {
-		counter++
-		outPut = append(outPut, "")
-	}
-
-	return outPut
 }
 
 func getMapsWithMaxNumberOfKey(myMap []map[string]string) (maxMap map[string]string) {
