@@ -1,46 +1,48 @@
 package ui
 
 import (
+	"fmt"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 	"log"
 )
 
-/*
-func main() {
+var (
+	myStore *gtk.ListStore
+)
+
+/*func main() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-
 	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy091420200.audit")
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
-	treeView, listStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
+	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
 	width, height := 600, 300
 
-	for i := 0; i < len(info) ; i++ {
-		addRow(listStore,createInterface(test(info[i],positionWithKeys)))
+	for i := 0; i < len(info); i++ {
+		addRow(myStore, createInterface(test(info[i], positionWithKeys)))
 	}
 
-	vAdj ,err := gtk.AdjustmentNew(0, 0, float64(width), 1, 10, float64(height))
-	if err!=nil {
-		log.Println("vadjerr:",err)
+	vAdj, err := gtk.AdjustmentNew(0, 0, float64(width), 1, 10, float64(height))
+	if err != nil {
+		log.Println("vadjerr:", err)
 	}
 
 	hAdj, err := gtk.AdjustmentNew(0, 0, float64(width), 1, 10, float64(height))
-	if err!=nil {
-		log.Println("hadj",err)
+	if err != nil {
+		log.Println("hadj:", err)
 	}
 
-	scrolledWindow, err := gtk.ScrolledWindowNew(hAdj,vAdj)
+	scrolledWindow, err := gtk.ScrolledWindowNew(hAdj, vAdj)
+	if err != nil {
+		log.Println("scrolled window error:", err)
+	}
 	scrolledWindow.Add(treeView)
 	scrolledWindow.SetHExpand(true)
 	scrolledWindow.SetVExpand(true)
 
-
-	if err!=nil {
-		log.Println("scrolled window error:",err)
-	}
 
 	win.SetPosition(gtk.WIN_POS_CENTER)
 
@@ -50,9 +52,9 @@ func main() {
 	if err != nil {
 		log.Fatal("Could not get tree selection object.")
 	}
-	selection.SetMode(gtk.SELECTION_SINGLE)
-	selection.Connect("changed", treeSelectionChangedCB)
 
+	selection.SetMode(gtk.SELECTION_MULTIPLE)
+	selection.Connect("changed", SelectionChanged)
 
 
 	win.Add(scrolledWindow)
@@ -61,19 +63,21 @@ func main() {
 }*/
 
 // working with single selection
-func treeSelectionChangedCB(selection *gtk.TreeSelection) {
-	var iter *gtk.TreeIter
-	var model gtk.ITreeModel
-	var ok bool
-	model, iter, ok = selection.GetSelected()
-	if ok {
-		tpath, err := model.(*gtk.TreeModel).GetPath(iter)
-		if err != nil {
-			log.Printf("treeSelectionChangedCB: Could not get path from model: %s\n", err)
-			return
-		}
-		log.Printf("treeSelectionChangedCB: selected path: %s\n", tpath)
+func SelectionChanged(s *gtk.TreeSelection) {
+	// Returns glib.List of gtk.TreePath pointers
+	rows := s.GetSelectedRows(myStore)
+	paths := make([]string, 0, rows.Length())
+
+	for l := rows; l != nil; l = l.Next() {
+		path := l.Data().(*gtk.TreePath)
+		iter, _ := myStore.GetIter(path)
+		value, _ := myStore.GetValue(iter, 11)
+		str, _ := value.GetString()
+		log.Println(str)
+		paths = append(paths, path.String())
 	}
+
+	fmt.Println(paths)
 }
 
 //getMapsWithMaxNumberOfKey(info)
@@ -114,6 +118,7 @@ func setupTreeView(maxSizeMap map[string]string) (*gtk.TreeView, *gtk.ListStore,
 	if err != nil {
 		log.Fatal("Unable to create list store:", err)
 	}
+	myStore = listStore
 	treeView.SetModel(listStore)
 
 	return treeView, listStore, positionWithKeys
