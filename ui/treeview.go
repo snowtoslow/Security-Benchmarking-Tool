@@ -1,7 +1,6 @@
 package ui
 
 import (
-	"fmt"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 	"log"
@@ -70,17 +69,10 @@ func SelectionChanged(s *gtk.TreeSelection) {
 
 	for l := rows; l != nil; l = l.Next() {
 		path := l.Data().(*gtk.TreePath)
-		iter, _ := myStore.GetIter(path)
-		value, _ := myStore.GetValue(iter, 11)
-		str, _ := value.GetString()
-		log.Println(str)
 		paths = append(paths, path.String())
 	}
-
-	fmt.Println(paths)
+	log.Println(paths)
 }
-
-//getMapsWithMaxNumberOfKey(info)
 
 // Add a column to the tree view (during the initialization of the tree view)
 func createColumn(title string, id int) *gtk.TreeViewColumn {
@@ -153,8 +145,8 @@ func setupWindow(title string) *gtk.Window {
 	return win
 }
 
-func test(map1 map[string]string, mapWithInts map[int]string) []string {
-	arrayWithLengthEleven := make([]string, len(mapWithInts))
+func test(map1 map[string]string, mapWithInts map[int]string) (arrayWithLengthEleven []string) {
+	arrayWithLengthEleven = make([]string, len(mapWithInts))
 	for k, v := range mapWithInts {
 		for key, value := range map1 {
 			if v == key {
@@ -162,7 +154,7 @@ func test(map1 map[string]string, mapWithInts map[int]string) []string {
 			}
 		}
 	}
-	return arrayWithLengthEleven
+	return
 }
 
 func createInterface(stringArr []string) (myInterface []interface{}) {
