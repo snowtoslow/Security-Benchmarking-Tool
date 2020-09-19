@@ -2,11 +2,9 @@ package main
 
 import (
 	"Security-Benchmarking-Tool/constants"
-	"Security-Benchmarking-Tool/files"
-	"Security-Benchmarking-Tool/store"
+	"Security-Benchmarking-Tool/ui"
 	"Security-Benchmarking-Tool/utils"
 	"fmt"
-	"github.com/gotk3/gotk3/gtk"
 	"log"
 	"os"
 )
@@ -31,7 +29,7 @@ func init() {
 
 func main() {
 
-	HOME, err := utils.GetUserHome()
+	/*HOME, err := utils.GetUserHome()
 	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
 	var policyFileNameNew string
 
@@ -95,5 +93,9 @@ func main() {
 
 	win.ShowAll()
 
-	gtk.Main()
+	gtk.Main()*/
+
+	if _, err := ui.SetupWindow(); err != nil {
+		log.Println("Main err:", err)
+	}
 }
