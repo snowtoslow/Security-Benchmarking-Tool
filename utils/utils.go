@@ -9,11 +9,6 @@ import (
 	"time"
 )
 
-// for tests purpose here
-func GenerateFileNames() string {
-	return "/home/snowtoslow/Desktop/myFile.audit"
-}
-
 func GenerateSavedFileName(path string, fileFormat string, fileType string) (savedFileName string, err error) {
 	counter, err := fileCount(path)
 	if err != nil {
