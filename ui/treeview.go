@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"Security-Benchmarking-Tool/files"
+	"Security-Benchmarking-Tool/store"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 	"log"
@@ -10,11 +12,11 @@ var (
 	myStore *gtk.ListStore
 )
 
-/*func main() {
+func DisplayOptionsToCreateCustomShit() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy091420200.audit")
+	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy091920200.audit") // change here the path
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
@@ -42,7 +44,6 @@ var (
 	scrolledWindow.SetHExpand(true)
 	scrolledWindow.SetVExpand(true)
 
-
 	win.SetPosition(gtk.WIN_POS_CENTER)
 
 	win.SetDefaultSize(width, height)
@@ -55,11 +56,10 @@ var (
 	selection.SetMode(gtk.SELECTION_MULTIPLE)
 	selection.Connect("changed", SelectionChanged)
 
-
 	win.Add(scrolledWindow)
 	win.ShowAll()
 	gtk.Main()
-}*/
+}
 
 // working with single selection
 func SelectionChanged(s *gtk.TreeSelection) {

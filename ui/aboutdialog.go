@@ -55,6 +55,17 @@ func SetupAboutDialogWindow() (err error) {
 	}
 
 	if _, err = createButtons(object, setupParseButton); err != nil {
+		log.Println("error parsing file:", err)
+		return err
+	}
+
+	object, err = createObject(builder, "custom_policy_button")
+	if err != nil {
+		log.Println("error opening tree view: ", err)
+		return err
+	}
+
+	if _, err = createButtons(object, openSelection); err != nil {
 		log.Println("HERE1:", err)
 		return err
 	}
@@ -123,4 +134,9 @@ func setupParseButton() {
 	} else {
 		label1.SetText(fmt.Sprintf("Your file was parsed successfully in: %s", jsonFileName))
 	}
+}
+
+// open tree view with selection;
+func openSelection() {
+	DisplayOptionsToCreateCustomShit()
 }
