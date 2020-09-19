@@ -9,11 +9,6 @@ import (
 	"time"
 )
 
-// for tests purpose here
-func GenerateFileNames() string {
-	return "/home/snowtoslow/Desktop/myFile.audit"
-}
-
 func GenerateSavedFileName(path string, fileFormat string, fileType string) (savedFileName string, err error) {
 	counter, err := fileCount(path)
 	if err != nil {
@@ -54,6 +49,11 @@ func CreateAuditsDir(home string) (err error) {
 	err = os.MkdirAll(home+constants.DESKTOP+constants.AuditDirectory+constants.ParsedDataDirectory, 0755)
 	if err != nil {
 		return err
+	}
+
+	err = os.MkdirAll(home+constants.DESKTOP+constants.AuditDirectory+constants.CustomAuditDirectory, 0755)
+	if err != nil {
+		return
 	}
 
 	return nil

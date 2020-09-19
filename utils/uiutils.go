@@ -3,7 +3,7 @@ package utils
 import "strconv"
 
 // create array of custom maps from indexes of main array of audits;
-func createMapOfAuditsFromIndexArray(indexArray []int, auditsMapArray []map[string]string) (customAudits []map[string]string) {
+func CreateMapOfAuditsFromIndexArray(indexArray []int, auditsMapArray []map[string]string) (customAudits []map[string]string) {
 	for k := range indexArray {
 		customAudits = append(customAudits, auditsMapArray[k])
 	}
@@ -11,7 +11,7 @@ func createMapOfAuditsFromIndexArray(indexArray []int, auditsMapArray []map[stri
 }
 
 // convert array of indexes(string) to array of indexes on int;
-func convertArrayToInt(indexesArrayOfString []string) (intArray []int, err error) {
+func ConvertArrayToInt(indexesArrayOfString []string) (intArray []int, err error) {
 	intArray = make([]int, 0, len(indexesArrayOfString))
 	for _, v := range indexesArrayOfString {
 		if k, err := strconv.Atoi(v); err != nil {
