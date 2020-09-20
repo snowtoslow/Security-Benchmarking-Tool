@@ -20,7 +20,7 @@ func DisplayOptionsToCreateCustomShit() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092020200.audit") // change here the path
+	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092020200.audit") // change here the path in future;
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
@@ -55,12 +55,15 @@ func DisplayOptionsToCreateCustomShit() {
 	HOME, err := utils.GetUserHome()
 	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
 
+	intArray, err := utils.ConvertArrayToInt(paths)
+	if err != nil {
+		log.Println("convert to array of ints error: ", err)
+	}
+
+	customAuditsMap := utils.CreateMapOfAuditsFromIndexArray(intArray, info)
+
 	createCustomPolicyButton.Connect("clicked", func() {
-		intArray, err := utils.ConvertArrayToInt(paths)
-		if err != nil {
-			log.Println("convert to array of ints error: ", err)
-		}
-		customAuditsMap := utils.CreateMapOfAuditsFromIndexArray(intArray, info)
+
 		customPolicyFileName, err := utils.GenerateSavedFileName(auditPath+constants.CustomAuditDirectory, constants.AuditFormat, constants.CustomAudit)
 		if err != nil {
 			log.Println("Custom policy file name generator: ", err)
