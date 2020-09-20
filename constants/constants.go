@@ -1,12 +1,12 @@
 package constants
 
 var (
-	DESKTOP            = "/Desktop"       // Desktop;
-	AuditDirectory     = "/audit"         // File which will be created;
-	CustomAuditsFolder = "/custom-audits" // folder with your custom created audits;
+	DESKTOP        = "/Desktop" // Desktop;
+	AuditDirectory = "/audit"   // File which will be created;
 
-	SavedFileDIRECTORY  = "/new-audits/"  // Path to downloaded audits
-	ParsedDataDirectory = "/policy-info/" // Path to our json
+	SavedFileDIRECTORY   = "/new-audits/"   // Path to downloaded audits;
+	ParsedDataDirectory  = "/policy-info/"  // Path to our json;
+	CustomAuditDirectory = "/custom-audit/" // Path to custom audits;
 
 	Policy       = "policy"        // part of name in our file;
 	ParsedPolicy = "parsed-policy" //part of name for parsed audit;

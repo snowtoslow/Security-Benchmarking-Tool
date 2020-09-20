@@ -51,6 +51,11 @@ func CreateAuditsDir(home string) (err error) {
 		return err
 	}
 
+	err = os.MkdirAll(home+constants.DESKTOP+constants.AuditDirectory+constants.CustomAuditDirectory, 0755)
+	if err != nil {
+		return
+	}
+
 	return nil
 }
 

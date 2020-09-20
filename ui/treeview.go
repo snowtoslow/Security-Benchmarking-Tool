@@ -1,8 +1,10 @@
 package ui
 
 import (
+	"Security-Benchmarking-Tool/constants"
 	"Security-Benchmarking-Tool/files"
 	"Security-Benchmarking-Tool/store"
+	"Security-Benchmarking-Tool/utils"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 	"log"
@@ -10,13 +12,15 @@ import (
 
 var (
 	myStore *gtk.ListStore
+	paths   []string
+	RootBox *gtk.Box
 )
 
 func DisplayOptionsToCreateCustomShit() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy091920200.audit") // change here the path
+	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092020200.audit") // change here the path
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
@@ -40,7 +44,38 @@ func DisplayOptionsToCreateCustomShit() {
 	if err != nil {
 		log.Println("scrolled window error:", err)
 	}
+
+	createCustomPolicyButton, err := gtk.ButtonNew()
+	if err != nil {
+		log.Println("custom create policy button error: ", err)
+	}
+
+	createCustomPolicyButton.SetLabel("Save")
+
+	HOME, err := utils.GetUserHome()
+	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
+
+	createCustomPolicyButton.Connect("clicked", func() {
+		intArray, err := utils.ConvertArrayToInt(paths)
+		if err != nil {
+			log.Println("convert to array of ints error: ", err)
+		}
+		customAuditsMap := utils.CreateMapOfAuditsFromIndexArray(intArray, info)
+		customPolicyFileName, err := utils.GenerateSavedFileName(auditPath+constants.CustomAuditDirectory, constants.AuditFormat, constants.CustomAudit)
+		if err != nil {
+			log.Println("Custom policy file name generator: ", err)
+		}
+		if err := store.CreateCustomPolicy(customPolicyFileName, customAuditsMap); err != nil {
+			log.Println("KAKOITO NOVYI EBANYI ERROR: ", err)
+		}
+
+	})
+
+	RootBox, _ = gtk.BoxNew(gtk.ORIENTATION_VERTICAL, 6)
+
 	scrolledWindow.Add(treeView)
+	RootBox.PackStart(scrolledWindow, true, true, 0)
+	RootBox.PackStart(createCustomPolicyButton, false, false, 0)
 	scrolledWindow.SetHExpand(true)
 	scrolledWindow.SetVExpand(true)
 
@@ -56,7 +91,7 @@ func DisplayOptionsToCreateCustomShit() {
 	selection.SetMode(gtk.SELECTION_MULTIPLE)
 	selection.Connect("changed", SelectionChanged)
 
-	win.Add(scrolledWindow)
+	win.Add(RootBox)
 	win.ShowAll()
 	gtk.Main()
 }
@@ -65,7 +100,7 @@ func DisplayOptionsToCreateCustomShit() {
 func SelectionChanged(s *gtk.TreeSelection) {
 	// Returns glib.List of gtk.TreePath pointers
 	rows := s.GetSelectedRows(myStore)
-	paths := make([]string, 0, rows.Length())
+	paths = make([]string, 0, rows.Length())
 
 	for l := rows; l != nil; l = l.Next() {
 		path := l.Data().(*gtk.TreePath)

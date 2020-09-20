@@ -85,7 +85,7 @@ func SearchItemsByKey(arrayToSearchIn []map[string]string, searcheableItem strin
 	return
 }
 
-func createCustomPolicy(path string, mapOfCharacteristics []map[string]string) (err error) {
+func CreateCustomPolicy(path string, mapOfCharacteristics []map[string]string) (err error) {
 	fileWriter, err := os.Create(path)
 	if err != nil {
 		return err

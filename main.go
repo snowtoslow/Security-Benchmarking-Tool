@@ -15,7 +15,6 @@ func init() {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println(HOME)
 	if _, err := os.Stat(HOME + constants.DESKTOP + constants.AuditDirectory); err != nil {
 		if os.IsNotExist(err) {
 			if err := utils.CreateAuditsDir(HOME); err != nil {
