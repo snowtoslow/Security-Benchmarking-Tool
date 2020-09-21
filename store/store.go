@@ -5,8 +5,10 @@ import (
 	"Security-Benchmarking-Tool/files"
 	"Security-Benchmarking-Tool/utils"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -68,14 +70,13 @@ func createMapForSingleItem(myStr string) (mymap map[string]string) {
 	return mymap
 }
 
-
-func SearchItemsByKey(arrayToSearchIn []map[string]string,searcheableItem string)(mapOfSearchedValues []map[string]string,message string){
-	for _,value := range arrayToSearchIn{
-		for k,_ := range value{
-			if strings.ToLower(value[k])==strings.ToLower(searcheableItem) {
-				mapOfSearchedValues = append(mapOfSearchedValues,value)
+func SearchItemsByKey(arrayToSearchIn []map[string]string, searcheableItem string) (mapOfSearchedValues []map[string]string, message string) {
+	for _, value := range arrayToSearchIn {
+		for k, _ := range value {
+			if strings.ToLower(value[k]) == strings.ToLower(searcheableItem) {
+				mapOfSearchedValues = append(mapOfSearchedValues, value)
 				message = "The configurations was found!"
-			}else {
+			} else {
 				message = "Not found!"
 			}
 		}
@@ -84,4 +85,29 @@ func SearchItemsByKey(arrayToSearchIn []map[string]string,searcheableItem string
 	return
 }
 
+func CreateCustomPolicy(path string, mapOfCharacteristics []map[string]string) (err error) {
+	fileWriter, err := os.Create(path)
+	if err != nil {
+		return err
+	}
 
+	defer fileWriter.Close()
+
+	for i := 0; i < len(mapOfCharacteristics); i++ {
+		_, err := fileWriter.WriteString(createStringWithCustomItem(mapOfCharacteristics[i]))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// function to create array of custom strings which will be put in file:
+func createStringWithCustomItem(mapOfCharacteristics map[string]string) (customString string) {
+	var valueOfCharacteristics string
+	for k, v := range mapOfCharacteristics {
+		valueOfCharacteristics += fmt.Sprintf("\t%s:%s\n", k, v)
+	}
+	customString = fmt.Sprintf("%s\n%s%s\n", constants.CustomItemStart, valueOfCharacteristics, constants.CustomItemEnd)
+	return
+}
