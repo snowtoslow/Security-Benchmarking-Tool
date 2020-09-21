@@ -1,11 +1,13 @@
 package utils
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // create array of custom maps from indexes of main array of audits;
 func CreateMapOfAuditsFromIndexArray(indexArray []int, auditsMapArray []map[string]string) (customAudits []map[string]string) {
-	for k := range indexArray {
-		customAudits = append(customAudits, auditsMapArray[k])
+	for _, v := range indexArray {
+		customAudits = append(customAudits, auditsMapArray[v])
 	}
 	return
 }
