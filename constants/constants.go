@@ -15,7 +15,7 @@ var (
 	AuditFormat      = ".audit"
 	ParsedFileFormat = ".json"
 
-	LinkToDownloadFrom = "https://www.tenable.com/downloads/api/v1/public/pages/configuration-audit-policies/downloads/11237/download?i_agree_to_tenable_license_agreement=true"
+	LinkToDownloadFrom = "https://www.tenable.com/downloads/api/v1/public/pages/cis-compliance-audit-policies/downloads/10758/download?i_agree_to_tenable_license_agreement=true"
 	CustomItemStart    = "<custom_item>"
 	CustomItemEnd      = "</custom_item>"
 )

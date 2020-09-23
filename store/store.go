@@ -3,12 +3,12 @@ package store
 import (
 	"Security-Benchmarking-Tool/constants"
 	"Security-Benchmarking-Tool/files"
-	"Security-Benchmarking-Tool/utils"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -60,14 +60,22 @@ func CreateMapForMultipleItems(arrayOfParsedData []string) []map[string]string {
 }
 
 func createMapForSingleItem(myStr string) (mymap map[string]string) {
+	regex := *regexp.MustCompile(`(.+?)\s*:\s*\\*"(.+?)"`)
+	regexType := *regexp.MustCompile(`(.+?)\s*:\s*(.[A-Z_]*)`)
 	mymap = make(map[string]string)
-	words := strings.Fields(myStr)
-	for i := 0; i < len(words); i++ {
-		if words[i] == ":" {
-			mymap[utils.RemoveQuotes(words[i-1])] = utils.RemoveQuotes(words[i+1])
+	res := regex.FindAllStringSubmatch(myStr, -1)
+
+	for i := range res {
+		if strings.Contains(res[i][1], "type") {
+			mynewArrWithWords := regexType.FindStringSubmatch(res[i][1])[0]
+			res[i][1] = strings.Replace(regexType.Split(res[i][1], -1)[1], " ", "", -1)
+			mymap[res[i][1]] = res[i][2]
+			mymap[strings.Replace(strings.Split(mynewArrWithWords, ":")[0], " ", "", -1)] = strings.Replace(strings.Split(mynewArrWithWords, ":")[1], " ", "", -1)
+		} else {
+			mymap[strings.Replace(res[i][1], " ", "", -1)] = res[i][2]
 		}
 	}
-	return mymap
+	return
 }
 
 func SearchItemsByKey(arrayToSearchIn []map[string]string, searcheableItem string) (mapOfSearchedValues []map[string]string, message string) {

@@ -20,7 +20,7 @@ func DisplayOptionsToCreateCustomShit() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092020200.audit") // change here the path in future;
+	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092320200.audit") // change here the path in future;
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
