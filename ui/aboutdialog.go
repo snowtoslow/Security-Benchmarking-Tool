@@ -2,7 +2,6 @@ package ui
 
 import (
 	"Security-Benchmarking-Tool/constants"
-	"Security-Benchmarking-Tool/files"
 	"Security-Benchmarking-Tool/store"
 	"Security-Benchmarking-Tool/utils"
 	"fmt"
@@ -123,7 +122,7 @@ func setupDownloadButton() {
 }
 
 func setupParseButton() {
-	arrayData := files.ParseFile(policyFileNameNew)
+	arrayData := utils.ParseFile(policyFileNameNew)
 	HOME, err := utils.GetUserHome()
 	auditPath := HOME + constants.DESKTOP + constants.AuditDirectory
 	info := store.CreateMapForMultipleItems(arrayData)

@@ -2,7 +2,6 @@ package ui
 
 import (
 	"Security-Benchmarking-Tool/constants"
-	"Security-Benchmarking-Tool/files"
 	"Security-Benchmarking-Tool/store"
 	"Security-Benchmarking-Tool/utils"
 	"github.com/gotk3/gotk3/glib"
@@ -20,7 +19,7 @@ func DisplayOptionsToCreateCustomShit() {
 	gtk.Init(nil)
 
 	win := setupWindow("Security Benchmarking Tool")
-	arrayData := files.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092320200.audit") // change here the path in future;
+	arrayData := utils.ParseFile("/home/snowtoslow/Desktop/audit/new-audits/policy092320200.audit") // change here the path in future;
 	info := store.CreateMapForMultipleItems(arrayData)
 	//
 	treeView, myStore, positionWithKeys := setupTreeView(getMapsWithMaxNumberOfKey(info))
