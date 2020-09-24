@@ -60,7 +60,7 @@ func CreateMapForMultipleItems(arrayOfParsedData []string) []map[string]string {
 }
 
 func createMapForSingleItem(myStr string) (mymap map[string]string) {
-	regex := *regexp.MustCompile(`(.+?)\s*:\s*\\*"(.+?)"`)
+	regex := *regexp.MustCompile(`(.+?)\s*:\s*\\*"(.+?)"`) /*`(.+?)\s*:\s*\\*"(.+?\".+?(\s.+?))*/
 	regexType := *regexp.MustCompile(`(.+?)\s*:\s*(.[A-Z_]*)`)
 	mymap = make(map[string]string)
 	res := regex.FindAllStringSubmatch(myStr, -1)

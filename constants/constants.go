@@ -18,4 +18,6 @@ var (
 	LinkToDownloadFrom = "https://www.tenable.com/downloads/api/v1/public/pages/cis-compliance-audit-policies/downloads/10758/download?i_agree_to_tenable_license_agreement=true"
 	CustomItemStart    = "<custom_item>"
 	CustomItemEnd      = "</custom_item>"
+
+	ShellToUse = "bash"
 )
