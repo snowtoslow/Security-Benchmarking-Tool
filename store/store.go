@@ -3,6 +3,7 @@ package store
 import (
 	"Security-Benchmarking-Tool/constants"
 	"Security-Benchmarking-Tool/files"
+	"Security-Benchmarking-Tool/utils"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
